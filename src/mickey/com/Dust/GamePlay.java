@@ -3,6 +3,7 @@ package mickey.com.Dust;
 import mickey.com.Map.Area;
 import mickey.com.Sprite.AnimatedUnit;
 import mickey.com.Sprite.Sprite;
+import mickey.com.Sprite.VirtualAnimatedEnemy;
 import mickey.com.Sprite.VirtualSpaceAnimatedSprite;
 import mickey.com.Sprite.VirtualSpaceSprite;
 
@@ -26,6 +27,7 @@ public class GamePlay extends BasicGameState{
 
 	int stateID = -1;
 	VirtualSpaceAnimatedSprite player;
+	VirtualAnimatedEnemy enemy;
 	ParticleSystem part;
 	ParticleSystem part2;
 	Rectangle viewPort = new Rectangle(0,0,800,600);
@@ -51,6 +53,9 @@ public class GamePlay extends BasicGameState{
 		player.setSpeed(0.2f);
 		//player.setX(gc.getWidth()/2 - 32);
 		//player.setY(gc.getHeight()/2 - 32);
+		
+		enemy = new VirtualAnimatedEnemy(new Image("images/characterSpriteSheet.png"), 0, gc.getWidth()/2 - 32, gc.getHeight()/2 - 32);
+		enemy.setSpeed(0.2f);
 
 		Image temp = new Image("images/particle.png", false);
 		part = new ParticleSystem(temp, 1500);
@@ -90,6 +95,7 @@ public class GamePlay extends BasicGameState{
 		//g.fillRect(0,0, gc.getWidth(), gc.getHeight());
 		g.drawString("Gameplay", 300, 10);
 		player.draw(g);
+		enemy.draw(g);
 		part.render();
 		part2.render();
 	}
@@ -101,6 +107,8 @@ public class GamePlay extends BasicGameState{
 
 		part.update(delta);
 		part2.update(delta);
+		
+		enemy.act(testArea, delta, gc);
 
 
 		if(input.isKeyDown(Input.KEY_S) && input.isKeyDown(Input.KEY_D))
