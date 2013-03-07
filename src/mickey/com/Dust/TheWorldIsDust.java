@@ -38,11 +38,9 @@ public class TheWorldIsDust extends StateBasedGame{
 		int h = app.getScreenHeight();
 		app.setDisplayMode(w,h,true);
 		//app.setDisplayMode(1280, 1024, false);
-		System.out.println("#HelloWorld");
 		app.start();
 	}
-     //$ checking to see if i chage this here if i can see the change
-	//lalalallaallalalal
+
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		// TODO Auto-generated method stub
