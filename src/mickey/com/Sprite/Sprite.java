@@ -51,6 +51,10 @@ public class Sprite {
 	public void setY(float y) {
 		this.y = y;
 	}
+	
+	public Location getLocation(){
+		return new Location(x,y);
+	}
 
 	public boolean isAlive() {
 		return alive;

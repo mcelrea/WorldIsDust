@@ -30,6 +30,13 @@ public class AnimatedUnit extends Sprite{
 		direction = DOWN;
 	}
 	
+	public float getHeight(){
+		return downAnim.getHeight();
+	}
+	public float getWidth(){
+		return downAnim.getHeight();
+	}
+	
 	@Override
 	public void draw(Graphics g)
 	{
@@ -70,6 +77,7 @@ public class AnimatedUnit extends Sprite{
 		if(direction == UPLEFT)
 			upLeftAnim.update(delta);
 	}
+	
 	
 	
 	public void startAnimation()

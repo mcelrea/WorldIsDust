@@ -17,6 +17,7 @@ public class TheWorldIsDust extends StateBasedGame{
 	
 	//public static final int STARTMENU = 0;
 	public static final int GAMEPLAY = 1;
+	public static AppGameContainer app;
 	//public static final int PAUSEMENU = 2;
 	//public static final int CHARACTERSELECT = 3;
 	
@@ -24,19 +25,19 @@ public class TheWorldIsDust extends StateBasedGame{
 		super("My Game Title");
 		
 		//this.addState(new StartMenu(STARTMENU));
-		this.addState(new GamePlay(GAMEPLAY));
+		this.addState(new GamePlayBetterCamera(GAMEPLAY));
 		//this.addState(new PauseMenu(PAUSEMENU));
 		//this.addState(new CharacterSelect(CHARACTERSELECT));
 	}
 	
 	public static void main(String args[]) throws SlickException
 	{
-		AppGameContainer app = new AppGameContainer(new TheWorldIsDust());//new ScalableGame(new Main(), 1280, 768));
+		 app = new AppGameContainer(new TheWorldIsDust());//new ScalableGame(new Main(), 1280, 768));
 		
 		//set game window full screen in proper resolution
 		int w = app.getScreenWidth();
 		int h = app.getScreenHeight();
-		app.setDisplayMode(w,h,true);
+		app.setDisplayMode(800,600,false);
 		//app.setDisplayMode(1280, 1024, false);
 		app.start();
 	}

@@ -23,17 +23,20 @@ import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ParticleIO;
 
-public class GamePlay extends BasicGameState{
+import ethan.com.Camera.Camera;
+
+public class GamePlayBetterCamera extends BasicGameState{
 
 	int stateID = -1;
-	public static VirtualSpaceAnimatedSprite player;
-	VirtualAnimatedEnemy enemy;
+	public static AnimatedUnit player;
+	
 	ParticleSystem part;
 	ParticleSystem part2;
 	Rectangle viewPort = new Rectangle(0,0,800,600);
 	Area testArea;
+	Camera camera;
 
-	public GamePlay(int stateID) {
+	public GamePlayBetterCamera(int stateID) {
 		this.stateID = stateID;
 	}
 
@@ -42,20 +45,22 @@ public class GamePlay extends BasicGameState{
 			throws SlickException {
 		// TODO Auto-generated method stub
 		initPlayer(gc, sb);
-		
+		camera = new Camera(player.getLocation());
+		camera.setMinBoundingBox(0, 0);
+		camera.setMaxBoundingBox(3000, 3000);
 		testArea = new Area(new TiledMap("data/testArea.tmx"));
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
 			throws SlickException {
 		// TODO Auto-generated method stub
-		player = new VirtualSpaceAnimatedSprite(new Image("images/characterSpriteSheet.png"), 0, gc.getWidth()/2 - 32, gc.getHeight()/2 - 32);
+		player = new AnimatedUnit(new Image("images/characterSpriteSheet.png"), 0);
 		player.setSpeed(0.2f);
 		//player.setX(gc.getWidth()/2 - 32);
 		//player.setY(gc.getHeight()/2 - 32);
 		
-		enemy = new VirtualAnimatedEnemy(new Image("images/characterSpriteSheet.png"), 0, gc.getWidth()/2 - 32, gc.getHeight()/2 - 32);
-		enemy.setSpeed(0.2f);
+		//enemy = new VirtualAnimatedEnemy(new Image("images/characterSpriteSheet.png"), 0, gc.getWidth()/2 - 32, gc.getHeight()/2 - 32);
+	   //enemy.setSpeed(0.2f);
 
 		Image temp = new Image("images/particle.png", false);
 		part = new ParticleSystem(temp, 1500);
@@ -87,17 +92,17 @@ public class GamePlay extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sb, Graphics g)
 			throws SlickException {
-		
-		
+		camera.drawCamera(g);
 		testArea.draw(g);
 		//g.translate(-viewPort.getX(), -viewPort.getY());//Written by  Ethan
 		g.setColor(new Color(44,155,26));
 		//g.fillRect(0,0, gc.getWidth(), gc.getHeight());
-		g.drawString("Gameplay", 300, 10);
+		g.drawString("Gameplay better camera", 300, 10);
 		player.draw(g);
-		enemy.draw(g);
+		//enemy.draw(g);
 		part.render();
 		part2.render();
+		System.out.println(player.getX() +"                        "+player.getY());
 	}
 
 	@Override
@@ -107,28 +112,25 @@ public class GamePlay extends BasicGameState{
 
 		part.update(delta);
 		part2.update(delta);
-		
-		enemy.act(testArea, delta, gc);
-
-
+		//enemy.act(testArea, delta, gc);
 		if(input.isKeyDown(Input.KEY_S) && input.isKeyDown(Input.KEY_D))
 		{
-			player.moveDownRight(testArea, delta, gc);
+			player.moveDownRight(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_S) && input.isKeyDown(Input.KEY_A))
 		{
-			player.moveDownLeft(testArea, delta, gc);
+			player.moveDownLeft(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_D))
 		{
-			player.moveUpRight(testArea, delta, gc);
+			player.moveUpRight(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_A))
 		{
-			player.moveUpLeft(testArea, delta, gc);
+			player.moveUpLeft(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_S))
@@ -136,29 +138,31 @@ public class GamePlay extends BasicGameState{
 			//viewPort.setY((float) (viewPort.getY()+(0.18*delta)));//written by Ethan
 			//player.moveDown(delta);
 			//player.moveForward(testArea, gc, sb, delta);
-			player.moveDown(testArea, delta, gc);
+			player.moveDown(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_D))
 		{
 			//viewPort.setX((float) (viewPort.getX()+(0.18*delta)));//written by Ethan
-			player.moveRight(testArea, delta, gc);
+			player.moveRight(delta);
 			player.update(delta);
 		}	
 		else if(input.isKeyDown(Input.KEY_A))
 		{
 			//viewPort.setX((float) (viewPort.getX()-(0.18*delta)));//written by Ethan
 			//player.moveLeft(delta);
-			player.moveLeft(testArea, delta, gc);
+			player.moveLeft(delta);
 			player.update(delta);
 		}
 		else if(input.isKeyDown(Input.KEY_W))
 		{
 			//viewPort.setY((float) (viewPort.getY()-(0.18*delta)));//written by Ethan
 			//player.moveUp(delta);
-			player.moveUp(testArea, delta, gc);
+			player.moveUp(delta);
 			player.update(delta);
 		}
+		
+		camera.CameraMove(player.getLocation());
 
 
 		//exit the game
