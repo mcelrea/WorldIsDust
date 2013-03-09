@@ -46,9 +46,9 @@ public class GamePlayBetterCamera extends BasicGameState{
 		// TODO Auto-generated method stub
 		initPlayer(gc, sb);
 		camera = new Camera(player.getLocation());
-		camera.setMinBoundingBox(0, 0);
-		camera.setMaxBoundingBox(3000, 3000);
 		testArea = new Area(new TiledMap("data/testArea2.tmx"));
+		camera.setMinBoundingBox(0, 0);
+		camera.setMaxBoundingBox(testArea.getMap().getWidth()*testArea.getMap().getTileWidth()-gc.getWidth(), testArea.getMap().getHeight()*testArea.getMap().getTileHeight()-gc.getHeight());
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
