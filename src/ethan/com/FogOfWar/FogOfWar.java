@@ -12,6 +12,7 @@ import mickey.com.Sprite.Location;
 
 public class FogOfWar {
 	private ArrayList<FogTile> theFog;
+	private ArrayList<FogTile> removedFogTiles;
 	private Location minimum;
 	private Location maximum;
 
@@ -20,14 +21,15 @@ public class FogOfWar {
 		this.maximum = max;
 		this.minimum = min;
 		this.theFog = new ArrayList<FogTile>();
+		this.removedFogTiles = new ArrayList<FogTile>();
 		createFog();
 	}
 
 
 
 	public void createFog() throws SlickException{
-		for(int i = (int) minimum.getX(); i < maximum.getX(); i += 32){
-			for(int j = (int) minimum.getY(); j < maximum.getY(); j += 32){
+		for(int i = (int) minimum.getX(); i < maximum.getX()+(26*32); i += 32){
+			for(int j = (int) minimum.getY(); j < maximum.getY()+(26*32); j += 32){
 				Location loc = new Location(i,j);
 				theFog.add(new FogTile(loc));
 			}
@@ -38,6 +40,8 @@ public class FogOfWar {
 		for(int i = 0; i < theFog.size(); i++){
 			if(player.getLocation().distance(theFog.get(i).getFogLocation())<200){
 				theFog.get(i).setDraw(false);
+				removedFogTiles.add(theFog.get(i));
+				theFog.remove(i);
 			}
 		}
 	}
