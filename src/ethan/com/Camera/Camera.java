@@ -39,8 +39,29 @@ public class Camera {
 		return true;
 	}
 	
+	public Location getMinBoundingBox() {
+		return minBoundingBox;
+	}
+
+	public Location getMaxBoundingBox() {
+		return maxBoundingBox;
+	}
+
+	public float getCameraX(){
+		return this.viewPort.getX();
+	}
 	
+	public float getCameraY(){
+		return this.viewPort.getY();
+	}
 	
+	public float getCameraWidth(){
+		return this.viewPort.getWidth();
+	}
+	
+	public float getCameraHeight(){
+		return this.viewPort.getHeight();
+	}
 	
 	public void drawCamera(Graphics g){
 		

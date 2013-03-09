@@ -27,6 +27,8 @@ public class Location {
 		this.y = y;
 	}
 	
-	
+	public float distance(Location loc){
+		return (float) Math.sqrt((Math.pow((loc.getX() - x),2) + Math.pow((loc.getY() - y),2)));
+	}
 
 }

@@ -2,6 +2,7 @@ package mickey.com.Dust;
 
 import mickey.com.Map.Area;
 import mickey.com.Sprite.AnimatedUnit;
+import mickey.com.Sprite.Location;
 import mickey.com.Sprite.Sprite;
 import mickey.com.Sprite.VirtualAnimatedEnemy;
 import mickey.com.Sprite.VirtualSpaceAnimatedSprite;
@@ -24,6 +25,7 @@ import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ParticleIO;
 
 import ethan.com.Camera.Camera;
+import ethan.com.FogOfWar.FogOfWar;
 
 public class GamePlayBetterCamera extends BasicGameState{
 
@@ -35,7 +37,8 @@ public class GamePlayBetterCamera extends BasicGameState{
 	Rectangle viewPort = new Rectangle(0,0,800,600);
 	Area testArea;
 	Camera camera;
-
+	FogOfWar fog;
+	
 	public GamePlayBetterCamera(int stateID) {
 		this.stateID = stateID;
 	}
@@ -49,6 +52,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 		testArea = new Area(new TiledMap("data/testArea2.tmx"));
 		camera.setMinBoundingBox(0, 0);
 		camera.setMaxBoundingBox(testArea.getMap().getWidth()*testArea.getMap().getTileWidth()-gc.getWidth(), testArea.getMap().getHeight()*testArea.getMap().getTileHeight()-gc.getHeight());
+		fog = new FogOfWar(camera.getMinBoundingBox(),camera.getMaxBoundingBox());
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
@@ -102,7 +106,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 		//enemy.draw(g);
 		part.render();
 		part2.render();
-		System.out.println(player.getX() +"                        "+player.getY());
+		fog.drawFog(g, camera);
 	}
 
 	@Override
@@ -163,7 +167,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 		}
 		
 		camera.CameraMove(player.getLocation());
-
+		fog.removeFog(player);
 
 		//exit the game
 		if(input.isKeyPressed(Input.KEY_ESCAPE))
