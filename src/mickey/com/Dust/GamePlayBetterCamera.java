@@ -48,7 +48,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 		camera = new Camera(player.getLocation());
 		camera.setMinBoundingBox(0, 0);
 		camera.setMaxBoundingBox(3000, 3000);
-		testArea = new Area(new TiledMap("data/testArea.tmx"));
+		testArea = new Area(new TiledMap("data/testArea2.tmx"));
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
