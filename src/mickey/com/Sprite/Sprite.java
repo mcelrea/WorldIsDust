@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 
 public class Sprite {
 	
-	public static int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4, DOWNRIGHT = 5, DOWNLEFT = 6, UPRIGHT = 7, UPLEFT = 8;
+	public static int UP = 0, UPRIGHT = 1, RIGHT = 2, DOWNRIGHT = 3, DOWN = 4, DOWNLEFT = 5, LEFT = 6, UPLEFT = 7;
 
 	protected Image image;
 	protected float x, y;
@@ -195,4 +195,14 @@ public class Sprite {
 		x += moveXByAngle(angle)*delta*speed;
 		y += moveYByAngle(angle)*delta*speed;
 	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	
+	
 }

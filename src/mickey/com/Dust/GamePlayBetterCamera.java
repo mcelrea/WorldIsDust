@@ -3,12 +3,14 @@ package mickey.com.Dust;
 import mickey.com.Map.Area;
 import mickey.com.Sprite.AnimatedUnit;
 import mickey.com.Sprite.Location;
+import mickey.com.Sprite.Projectile;
 import mickey.com.Sprite.Sprite;
 import mickey.com.Sprite.VirtualAnimatedEnemy;
 import mickey.com.Sprite.VirtualSpaceAnimatedSprite;
 import mickey.com.Sprite.VirtualSpaceSprite;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -38,6 +40,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 	Area testArea;
 	Camera camera;
 	FogOfWar fog;
+	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	
 	public GamePlayBetterCamera(int stateID) {
 		this.stateID = stateID;
@@ -102,11 +105,23 @@ public class GamePlayBetterCamera extends BasicGameState{
 		g.setColor(new Color(44,155,26));
 		//g.fillRect(0,0, gc.getWidth(), gc.getHeight());
 		g.drawString("Gameplay better camera", 300, 10);
+		
+		renderProjectiles(gc, sb, g);
+		
 		player.draw(g);
 		//enemy.draw(g);
 		part.render();
 		part2.render();
 		fog.drawFog(g, camera);
+	}
+	
+	public void renderProjectiles(GameContainer gc, StateBasedGame sb, Graphics g)
+			throws SlickException {
+		
+		for(Projectile p: projectiles)
+		{
+			p.draw(g);
+		}
 	}
 
 	@Override
@@ -166,6 +181,20 @@ public class GamePlayBetterCamera extends BasicGameState{
 			player.update(delta);
 		}
 		
+		if(input.isKeyPressed(Input.KEY_SPACE))
+		{
+			Projectile ar = new Projectile(new Image("images/arrow.png"));
+			ar.setOwner("player");
+			ar.setAlive(true);
+			ar.setSpeed(0.5f);
+			ar.setX(player.getX());
+			ar.setY(player.getY());
+			ar.setAngle(player.getDirection()*45-90);
+			projectiles.add(ar);
+		}
+		
+		updateProjectiles(gc, sb, delta);
+		
 		camera.CameraMove(player.getLocation());
 		fog.removeFog(player);
 
@@ -174,6 +203,15 @@ public class GamePlayBetterCamera extends BasicGameState{
 		{
 			System.out.println("Game exited due to escape key.");
 			System.exit(0);
+		}
+	}
+	
+	public void updateProjectiles(GameContainer gc, StateBasedGame sb, int delta)
+			throws SlickException {
+		
+		for(Projectile p: projectiles)
+		{
+			p.moveForward(delta);
 		}
 	}
 
