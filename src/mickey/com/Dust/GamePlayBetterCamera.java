@@ -208,8 +208,8 @@ public class GamePlayBetterCamera extends BasicGameState{
 			ar.setOwner("player");
 			ar.setAlive(true);
 			ar.setSpeed(0.5f);
-			ar.setX(player.getX());
-			ar.setY(player.getY());
+			ar.setX(player.getX()+(player.getWidth()/2));
+			ar.setY(player.getY()+(player.getHeight()/2));
 			ar.setAngle(player.getDirection()*45-90);
 			projectiles.add(ar);
 		}
