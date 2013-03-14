@@ -27,7 +27,10 @@ import org.newdawn.slick.particles.ConfigurableEmitter;
 import org.newdawn.slick.particles.ParticleIO;
 
 import ethan.com.Camera.Camera;
+import ethan.com.Enemies.PathedEnemy;
 import ethan.com.FogOfWar.FogOfWar;
+import ethan.com.path.Path;
+import ethan.com.path.WayPoint;
 
 public class GamePlayBetterCamera extends BasicGameState{
 
@@ -41,6 +44,9 @@ public class GamePlayBetterCamera extends BasicGameState{
 	Camera camera;
 	FogOfWar fog;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	PathedEnemy enmy;
+	ArrayList<WayPoint> ldfs;
+	Path path;
 	
 	public GamePlayBetterCamera(int stateID) {
 		this.stateID = stateID;
@@ -56,6 +62,13 @@ public class GamePlayBetterCamera extends BasicGameState{
 		camera.setMinBoundingBox(0, 0);
 		camera.setMaxBoundingBox(testArea.getMap().getWidth()*testArea.getMap().getTileWidth()-gc.getWidth(), testArea.getMap().getHeight()*testArea.getMap().getTileHeight()-gc.getHeight());
 		fog = new FogOfWar(camera.getMinBoundingBox(),camera.getMaxBoundingBox());
+		ldfs = new ArrayList<WayPoint>();
+		ldfs.add(new WayPoint(300,300));
+		ldfs.add(new WayPoint(500,300));
+		ldfs.add(new WayPoint(500,600));
+		ldfs.add(new WayPoint(700,600));
+		ldfs.add(new WayPoint(900,800));
+		path = new Path(ldfs);
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
@@ -63,6 +76,9 @@ public class GamePlayBetterCamera extends BasicGameState{
 		// TODO Auto-generated method stub
 		player = new AnimatedUnit(new Image("images/characterSpriteSheet.png"), 0);
 		player.setSpeed(0.2f);
+		
+		enmy = new PathedEnemy(new Image("images/characterSpriteSheet.png"), 0,path);
+		enmy.setSpeed(0.15f);
 		//player.setX(gc.getWidth()/2 - 32);
 		//player.setY(gc.getHeight()/2 - 32);
 		
@@ -109,9 +125,11 @@ public class GamePlayBetterCamera extends BasicGameState{
 		renderProjectiles(gc, sb, g);
 		
 		player.draw(g);
+		enmy.draw(g);
 		//enemy.draw(g);
 		part.render();
 		part2.render();
+		path.debugPath(g);//draws debugging path
 		fog.drawFog(g, camera);
 	}
 	
@@ -128,7 +146,10 @@ public class GamePlayBetterCamera extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sb, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-
+		
+		enmy.act(delta);
+		enmy.update(delta);
+		
 		part.update(delta);
 		part2.update(delta);
 		//enemy.act(testArea, delta, gc);

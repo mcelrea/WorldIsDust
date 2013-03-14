@@ -31,6 +31,11 @@ public class Sprite {
 	public Image getImage() {
 		return image;
 	}
+	
+	public void setLocation(Location loc){
+		x = loc.getX();
+		y = loc.getY();
+	}
 
 	public void setImage(Image image) {
 		this.image = image;
