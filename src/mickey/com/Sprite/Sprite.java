@@ -3,6 +3,8 @@ package mickey.com.Sprite;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import ethan.com.Camera.Camera;
+
 public class Sprite {
 	
 	public static int UP = 0, UPRIGHT = 1, RIGHT = 2, DOWNRIGHT = 3, DOWN = 4, DOWNLEFT = 5, LEFT = 6, UPLEFT = 7;
@@ -209,5 +211,27 @@ public class Sprite {
 		this.direction = direction;
 	}
 	
-	
+	public boolean isCollidingWithCamera(Camera cam){
+		  float left1, left2;
+        float right1, right2;
+        float top1, top2;
+        float bottom1, bottom2;
+
+        left1 = x;
+        left2 = cam.getCameraX();
+        right1 = x + image.getWidth();
+        right2 = cam.getCameraX() + cam.getCameraWidth();
+        top1 = y;
+        top2 = cam.getCameraY();
+        bottom1 = y + image.getHeight();
+        bottom2 = cam.getCameraY() + cam.getCameraHeight();
+
+        if (bottom1 < top2) return false; //no collision
+        if (top1 > bottom2) return false; //no collision
+
+        if (right1 < left2) return false; //no collision
+        if (left1 > right2) return false; //no collision
+
+        return true; //YES, collision
+	}
 }

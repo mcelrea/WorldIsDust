@@ -62,7 +62,9 @@ public class Forester {
 	
 	public void drawForest(Graphics g, Camera cam){
 		for(Sprite s : plants){
-			s.draw(g);
+			if(s.isCollidingWithCamera(cam)){
+				s.draw(g);
+			}
 		}
 	}
 }
