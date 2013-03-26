@@ -58,6 +58,8 @@ public class AnimatedUnit extends Sprite{
 			upLeftAnim.draw(x,y);
 	}
 	
+	
+	
 	public void update(int delta)
 	{
 		if(direction == DOWN)

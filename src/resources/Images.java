@@ -5,6 +5,7 @@ import org.newdawn.slick.SlickException;
 
 public class Images {
 	private static Image fogTile;
+	private static Image grass;
 	
 	public static Image fog() throws SlickException{
 		if(fogTile == null){
@@ -12,4 +13,12 @@ public class Images {
 		}
 		return fogTile;
 	}
+	
+	public static Image grass() throws SlickException{
+		if(grass == null){
+			grass = new Image("images/Plants/grass.png");
+		}
+		return grass;
+	}
+	
 }

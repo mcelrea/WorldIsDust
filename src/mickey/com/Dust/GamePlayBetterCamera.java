@@ -29,6 +29,7 @@ import org.newdawn.slick.particles.ParticleIO;
 import ethan.com.Camera.Camera;
 import ethan.com.Enemies.PathedEnemy;
 import ethan.com.FogOfWar.FogOfWar;
+import ethan.com.Forester.Forester;
 import ethan.com.path.Path;
 import ethan.com.path.WayPoint;
 
@@ -46,6 +47,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	PathedEnemy enmy;
 	ArrayList<WayPoint> ldfs;
+	Forester forest;
 	Path path;
 	
 	public GamePlayBetterCamera(int stateID) {
@@ -68,7 +70,9 @@ public class GamePlayBetterCamera extends BasicGameState{
 		ldfs.add(new WayPoint(500,600));
 		ldfs.add(new WayPoint(700,600));
 		ldfs.add(new WayPoint(900,800));
+		ldfs.add(new WayPoint(900,400));
 		path = new Path(ldfs);
+		this.forest = new Forester(player,5,140);
 	}
 
 	public void initPlayer(GameContainer gc, StateBasedGame sb)
@@ -130,6 +134,7 @@ public class GamePlayBetterCamera extends BasicGameState{
 		part.render();
 		part2.render();
 		path.debugPath(g);//draws debugging path
+		this.forest.drawForest(g, camera);
 		fog.drawFog(g, camera);
 	}
 	
@@ -146,6 +151,8 @@ public class GamePlayBetterCamera extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sb, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
+		
+		this.forest.populateForester();
 		
 		enmy.act(delta);
 		enmy.update(delta);
